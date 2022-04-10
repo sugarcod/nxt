@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button, Htag, Tag, PTag } from "../components";
 import { Rating } from "../components/Rating/Rating";
-import { Layout } from "../layout/Layout";
+import { Layout, withLayout } from "../layout/Layout";
 
-export default function Home(): JSX.Element {
+function Home(): JSX.Element {
   const [rat, setRat] = useState(0);
 
   return (
-    <Layout>
+    <>
       <div className="container">
         <Htag tag="h1">Tag</Htag>
         <Button appearance="primary" arrow="right" className="lol">
@@ -32,13 +32,15 @@ export default function Home(): JSX.Element {
         <Rating rating={2} setRating={setRat} />
         <Rating rating={1} setRating={setRat} isEditable={true} />
       </div>
-    </Layout>
+    </>
   );
 }
 
+export default withLayout(Home);
+
 // css in js
-{
-  /* <style jsx>{`
+
+/* <style jsx>{`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -55,4 +57,3 @@ export default function Home(): JSX.Element {
           }
         }
       `}</style> */
-}
