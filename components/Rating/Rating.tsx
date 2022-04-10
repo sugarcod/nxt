@@ -13,28 +13,32 @@ export const Rating = ({
   const [myRate, setMyRate] = useState(new Array(5).fill(<></>));
   const [tempRate, setTempRate] = useState(0);
 
-  let operate = true;
   const rateArr = (rating: number): JSX.Element[] => {
+    let operate = true;
     const rate = myRate.map((elem, index) => {
       if (isEditable) {
         return (
           <Star
             key={index}
             onMouseEnter={() => {
-              console.log(index);
-              setTempRate(index + 1);
+              if (!operate) return;
+              if (operate) {
+                setTempRate(index + 1);
+              }
               //rateArr(index + 1);
             }}
             onMouseLeave={() => {
-              console.log(operate, "leave oerate");
-              if (operate) setTempRate(0);
+              if (!operate) return;
+              if (operate) {
+                setTempRate(0);
+              }
             }}
             onClick={() => {
-              setRating(tempRate + 1);
               operate = false;
-              console.log(operate, "click oerate");
+              setRating(tempRate + 1);
             }}
             className={cn(styles.star, {
+              [styles.paint]: !operate,
               [styles.filled]: tempRate > index
             })}
           />
