@@ -1,52 +1,57 @@
 import { RatingProps } from "./Rating.props";
-import styles from './Rating.module.sass';
-import Star from './star.svg';
+import styles from "./Rating.module.sass";
+import Star from "./star.svg";
 import { useState } from "react";
-import cn from 'classnames';
+import cn from "classnames";
 
+export const Rating = ({
+  rating,
+  setRating,
+  isEditable = false,
+  ...props
+}: RatingProps) => {
+  const [myRate, setMyRate] = useState(new Array(5).fill(<></>));
+  const [tempRate, setTempRate] = useState(0);
 
-export const Rating = ({rating, setRating, isEditable = false, ...props}: RatingProps) => {
-
-  const [myRating, setMyRating] = useState(rating);
-  const [currentRating, setCurentRating] = useState(0);
-  
-
-  const ratingSwop = [];
-  const ratingEditable = [];
-  for (let index = 0; index < 5; index++) {
-      if(myRating > index){
-        ratingSwop.push(<span key={index}><Star className={styles.filled}/></span>);
+  let operate = true;
+  const rateArr = (rating: number): JSX.Element[] => {
+    const rate = myRate.map((elem, index) => {
+      if (isEditable) {
+        return (
+          <Star
+            key={index}
+            onMouseEnter={() => {
+              console.log(index);
+              setTempRate(index + 1);
+              //rateArr(index + 1);
+            }}
+            onMouseLeave={() => {
+              console.log(operate, "leave oerate");
+              if (operate) setTempRate(0);
+            }}
+            onClick={() => {
+              setRating(tempRate + 1);
+              operate = false;
+              console.log(operate, "click oerate");
+            }}
+            className={cn(styles.star, {
+              [styles.filled]: tempRate > index
+            })}
+          />
+        );
       } else {
-        ratingSwop.push(<span key={index}><Star /></span>);
+        if (rating > index) {
+          return <Star key={index} className={styles.filled} />;
+        } else {
+          return <Star key={index} />;
+        }
       }
-  }
+    });
+    return rate;
+  };
 
-
-  return (
-
-    <div {...props}>
-      {!isEditable && ratingSwop}
-      {isEditable && <div>
-        <span ><Star /></span>
-        <span ><Star /></span>
-        <span ><Star /></span>
-        <span ><Star /></span>
-        <span ><Star /></span>
-
-        </div>}
-    </div>
-  );
+  return <div>{rateArr(rating)}</div>;
 };
-
-
-
-
-
-
-
-
-
-
 
 /*
 import { RatingProps } from "./Rating.props";
