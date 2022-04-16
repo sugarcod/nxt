@@ -10,7 +10,9 @@
     "stylelint": "stylelint \"**/*.css\" --fix"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "cross-env": "^7.0.3",
+    "date-fns": "^2.28.0",
     "next": "latest",
     "next-sass": "1.0.3",
     "node-sass": "7.0.1",

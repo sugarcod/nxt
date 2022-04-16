@@ -1,4 +1,4 @@
-import { LayoutProps } from "./LayoutProps.props";
+import { LayoutProps } from "./Layout.props";
 import styles from "./Layout.module.sass";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { Header } from "./Header/Header";
