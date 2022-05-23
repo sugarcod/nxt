@@ -1,0 +1,61 @@
+
+.firstLevel
+  display: -ms-grid
+  display: grid
+  grid-template-columns: 24px 1fr
+  -ms-grid-columns: 24px 1fr
+  gap: 20px
+  margin-top: 20px
+  align-items: center
+  font-size: 18px
+  font-weight: 500
+
+.firstLevelACtive,
+.firstLevel:hover
+  color: var(--primary)
+  
+.firstLevelACtive svg,
+.firstLevel:hover svg
+  fill: #7653FC
+
+
+.secondCategory
+  margin-bottom: 10px
+
+  cursor: pointer
+  text-transform: uppercase
+
+  color: var(--grey-dark)
+  font-weight: 300
+  font-size: 12px
+  line-height: 16px
+
+.secondBlockContainer
+  margin-top: 15px
+  margin-left: 12px
+  padding-left: 32px
+  border-left: 1px solid #DFDFDF
+
+.secondLevelBlockOpen:last-child
+  margin-bottom: 20px
+  
+
+.secondLevelBlockOpen
+  display: block !important
+
+.secondLevelBlock
+  display: none
+
+
+.thirdLevel
+  font-weight: 500
+  font-size: 14px
+  line-height: 19px
+  margin-bottom: 10px
+  display: block
+  cursor: pointer
+  color: var(--grey-dark)
+
+.thirdLevelActive,
+.thirdLevel:hover
+  color: var(--primary)
