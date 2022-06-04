@@ -10,6 +10,7 @@ function Type({firstCategory}: TypeProps): JSX.Element {
   return (
     <>
      <p>Type: {firstCategory}</p>
+     <p> SIte of courses main</p>
     </>
   );
 }

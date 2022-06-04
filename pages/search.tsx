@@ -6,7 +6,7 @@ import { MenuItem } from "../interfaces/menu.interface";
 function Search(): JSX.Element {
   return (
     <>
-     <p>search</p>
+     <p>search page</p>
     </>
   );
 }
