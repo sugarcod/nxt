@@ -1,17 +1,18 @@
-import { Htag } from '../Htag/Htag';
-import { Tag } from '../Tag/Tag';
-import { SkillsProps } from './Sort.props';
-import styles from './Skills.module.sass';
+import { SortProps } from './Sort.props';
+import styles from './Sort.module.sass';
+import SortIcon from './sort.svg';
+import cn from 'classnames';
 
-export const Sort = ({tags}: SkillsProps) => {
+export const Sort = ({sort, setSort, className, ...props}: SortProps) => {
   return (
-    <div className={styles.wrapper}>
-        <Htag tag='h2'>Получаемые навыки</Htag>
-        <div className={styles.skill} >
-          {tags.map(tag => (
-            <Tag key={tag} size='s' color='primary'>{tag}</Tag>
-          ))}
-        </div>
+    <div className={cn(styles.sort, className)} {...props}>
+        <span>
+          <SortIcon /> По рейтингу
+        </span>
+        <span>
+          <SortIcon /> По цене
+        </span>
     </div>
   )
 }
+
