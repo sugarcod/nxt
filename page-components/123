@@ -1,3 +1,31 @@
+let b = arra.sort((a, b) => {
+  return a.price - b.price;
+});
+
+let c = arra.map((elem) => elem.title);
+
+let d = arra.sort((a, b) => {
+  let oneName = a.title.toLowerCase(),
+    twoName = b.title.toLowerCase();
+
+  if (oneName < twoName) {
+    return -1;
+  }
+
+  if (oneName > twoName) {
+    return 1;
+  }
+
+  return 0;
+});
+
+let f = d.map((elem) => elem.title);
+
+console.log(f);
+
+
+
+
 [
     {
         "_id": "605a40e39ccee15e2951a7cf",
