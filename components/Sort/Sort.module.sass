@@ -1,44 +1,22 @@
-.wrapper
-  margin-top: 40px
-
-.listItem
+.sort
   display: grid
-  grid-template-rows: auto auto
+  grid-template-columns: 1fr 1fr
+  span
+    display: flex
+    align-items: center
+    justify-content: center
+    &:nth-child(1)
+      margin-right: 20px
+    svg
+      margin-right: 6px
+      
 
-.itemTitle
-  display: grid
-  grid-template-columns: 90px 1fr
-  align-items: center
-  margin-bottom: 20px
+.active
+  font-weight: bold
+  svg
+    display: block
 
-.itemText
-  padding-left: 90px
-  position: relative
-  margin-bottom: 40px
-  &::before
-      content: ''
-      position: absolute
-      left: 25px
-      height: 100%
-      width: 1px
-      background: #D2D2D2
-  p
-    margin: 0
-    position: relative
-    font-weight: 400
-    font-size: 18px
-    line-height: 29px
-
-.end
-  p
-    font-weight: 400
-    font-size: 18px
-    line-height: 29px
-
-.skill
-  margin-bottom: 30px
-  > div
-    margin-right: 10px
-    margin-bottom: 10px
+.sortIcon
+  display: none
 
     

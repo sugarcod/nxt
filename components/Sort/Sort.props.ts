@@ -1,5 +1,4 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { TopPageAdvantage } from "../../interfaces/page.interface";
 
 export interface SortProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>{
   sort: SortEnum;

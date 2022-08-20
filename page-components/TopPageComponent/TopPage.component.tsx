@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { HhData, Htag, PTag, Skills, Tag } from "../../components";
 import { Advantages } from "../../components/Advantages/Advantages";
 import { Sort } from "../../components/Sort/Sort";
@@ -15,35 +15,35 @@ interface SortAction {
 
 
 const ratingReducer = (state:  ProductModel[] , action:SortAction ):ProductModel[]  => {
-  const {type} = action
-  switch (type) {
+  switch (action.type) {
     case SortEnum.Rating:
-      return state;
+      return [...state.sort((a,b) => a.initialRating - b.initialRating ? -1 : 1)]
     case SortEnum.Price:
-      return state
+      return [...state.sort((a,b) =>a.price - b.price ? -1 : 1)] 
     default:
-      return state;
+      throw new Error('Not valid type of sort')
   }
 }
 
 
 
 export const TopPageComponent = ({page, products, firstCategory}: TopPageComponentProps) => {
-console.log("🚀 ~ file: TopPage.component.tsx ~ line 10 ~ TopPageComponent ~ products", products)
-const [rating, dispatchRating] = useReducer(ratingReducer, products);
+  const [productSorted, dispatchSort] = useReducer(ratingReducer, products);
+
+  const setSort = (sort: SortEnum) => {
+    dispatchSort({type: sort});
+  }
 
   return (
     <div className={styles.wrapper}>
        <div className={styles.title}>
          <Htag tag="h1">{page.title}</Htag>
          {products && <Tag size="m" color="grey">{products.length}</Tag>}
-         <Sort sort={SortEnum.Rating} setSort={function (sort: SortEnum): void {
-          throw new Error("Function not implemented.");
-        } }  />
+         <Sort sort={SortEnum.Rating} setSort={setSort}  />
        </div>
 
        <div>
-       {products && products.map(prod => (<div className="mb-3" key={prod._id}>
+       {productSorted && productSorted.map(prod => (<div className="mb-3" key={prod._id}>
         <Htag tag="h3">{prod.title}</Htag>
         <span>{prod.price}</span>
         </div>))}
