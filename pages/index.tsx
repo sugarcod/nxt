@@ -1,10 +1,11 @@
 import { GetStaticProps } from "next";
 import { useState } from "react";
-import { Button, Htag, Tag, PTag } from "../components";
+import { Button, Htag, Tag, PTag, Input, Textarea } from "../components";
 import { Rating } from "../components/Rating/Rating";
 import { withLayout } from "../layout/Layout";
 import axios from 'axios';
 import { MenuItem } from "../interfaces/menu.interface";
+import { Product } from "../components/Product/Product";
 
 function Home({menu}: HomeProps): JSX.Element {
   const [rat, setRat] = useState(0);
@@ -36,6 +37,10 @@ function Home({menu}: HomeProps): JSX.Element {
         <Rating rating={4} setRating={setRat} />
         <Rating rating={2} setRating={setRat} />
         <Rating rating={1} setRating={setRat} isEditable={true} />
+
+        <Input placeholder="Rating"/>
+
+      
 
        
       </div>

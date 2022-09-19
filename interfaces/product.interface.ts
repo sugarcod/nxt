@@ -22,6 +22,7 @@
       _id: string;
       categories: string[];
       tags: string[];
+      clicks: number;
       title: string;
       image: string;
       description: string;

@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { HhData, Htag, PTag, Skills, Tag } from "../../components";
+import { HhData, Htag, Product, PTag, Skills, Tag } from "../../components";
 import { Advantages } from "../../components/Advantages/Advantages";
 import { Sort } from "../../components/Sort/Sort";
 import { SortEnum } from "../../components/Sort/Sort.props";
@@ -13,13 +13,34 @@ interface SortAction {
   type: SortEnum;
 }
 
+interface SortReducerState{
+  sort: SortEnum;
+  products: ProductModel[];
+}
 
-const ratingReducer = (state:  ProductModel[] , action:SortAction ):ProductModel[]  => {
+
+const ratingReducer = (state:  SortReducerState , action:SortAction ):SortReducerState  => {
   switch (action.type) {
     case SortEnum.Rating:
-      return [...state.sort((a,b) => a.initialRating - b.initialRating ? -1 : 1)]
+      return{
+        sort: SortEnum.Rating,
+        products: [...state.products.sort((a,b) => a.initialRating - b.initialRating )]
+      } 
     case SortEnum.Price:
-      return [...state.sort((a,b) =>a.price - b.price ? -1 : 1)] 
+      return{
+        sort: SortEnum.Price,
+        products:[...state.products.sort((a,b) =>a.price - b.price)] 
+      }
+    case SortEnum.ChangePrice:
+      return{
+        sort: SortEnum.ChangePrice,
+        products:[...state.products.sort((a,b) =>b.price - a.price) ]
+      }
+    case SortEnum.ChangeRating:
+      return{
+        sort: SortEnum.ChangeRating,
+        products: [...state.products.sort((a,b) => a.initialRating - b.initialRating )].reverse() 
+      }
     default:
       throw new Error('Not valid type of sort')
   }
@@ -28,25 +49,24 @@ const ratingReducer = (state:  ProductModel[] , action:SortAction ):ProductModel
 
 
 export const TopPageComponent = ({page, products, firstCategory}: TopPageComponentProps) => {
-  const [productSorted, dispatchSort] = useReducer(ratingReducer, products);
-
+  const [{products: productSorted, sort: sortDispatch}, dispatchSort] = useReducer(ratingReducer, {products, sort: SortEnum.Rating});
+  console.log(sortDispatch, 'CHECK');
+  
   const setSort = (sort: SortEnum) => {
-    dispatchSort({type: sort});
+    dispatchSort({type: sort}, );
   }
+
 
   return (
     <div className={styles.wrapper}>
        <div className={styles.title}>
          <Htag tag="h1">{page.title}</Htag>
          {products && <Tag size="m" color="grey">{products.length}</Tag>}
-         <Sort sort={SortEnum.Rating} setSort={setSort}  />
+         <Sort sort={sortDispatch} setSort={setSort}  />
        </div>
 
        <div>
-       {productSorted && productSorted.map(prod => (<div className="mb-3" key={prod._id}>
-        <Htag tag="h3">{prod.title}</Htag>
-        <span>{prod.price}</span>
-        </div>))}
+       {productSorted && productSorted.map((prod:ProductModel , index: number) => (<Product product={prod} className="mb-3" key={index}/>))}
        </div>
 
        <div className={styles.hhTitle}>
