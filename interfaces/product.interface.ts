@@ -32,6 +32,7 @@
       oldPrice: number;
       characteristics: ProductCharacteristic[];
       advantages: string;
+      disadvantages: string;
       initialRating: number;
       createdAt: Date;
       updatedAt: Date;
