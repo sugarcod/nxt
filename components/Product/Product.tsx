@@ -8,10 +8,7 @@ import { Button } from "../Button/Button";
 
 
 export const Product = ({product, className, ...props}: ProductProps) => {
-  console.log(product, 'product');
-  console.log(process.env.NEXT_PUBLIC_DOMAIN, 'dom');
-  
-  
+
   return (
     <Card className={cn(className, styles.product)}>
     

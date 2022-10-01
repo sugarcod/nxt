@@ -7,6 +7,8 @@
 .logo
   grid-column: start / logoend
   grid-row: 1 / span 2
+  img
+    border-radius: 5px
 
 .title, .tag
   grid-column: titlestart/middle
@@ -28,3 +30,46 @@
 
 .advs
   grid-column: middle/end
+
+.title
+  font-weight: 600
+  font-size: 20px
+  line-height: 27px
+.tag
+  font-weight: 500
+  font-size: 12px
+  line-height: 12px
+  color: #3B434E
+
+.price, .credit
+  font-weight: 400
+  font-size: 20px
+  line-height: 27px
+  color: #3B434E
+
+.priceTitle, .creditTitle, .rateTitle
+  font-weight: 300
+  font-size: 14px
+  line-height: 19px
+  color: #3B434E
+
+.descr
+  font-weight: 400
+  font-size: 16px
+  line-height: 24px
+  color: #3B434E
+
+.advs
+  position: relative
+  div:nth-child(1)
+    position: absolute
+    left: 0
+    height: 100%
+    width: 2px
+    background: #1DC47E
+  div:nth-child(2)
+    position: absolute
+    left: 0
+    height: 100%
+    width: 2px
+    background: #FC836D

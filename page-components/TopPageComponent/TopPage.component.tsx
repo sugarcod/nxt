@@ -50,7 +50,6 @@ const ratingReducer = (state:  SortReducerState , action:SortAction ):SortReduce
 
 export const TopPageComponent = ({page, products, firstCategory}: TopPageComponentProps) => {
   const [{products: productSorted, sort: sortDispatch}, dispatchSort] = useReducer(ratingReducer, {products, sort: SortEnum.Rating});
-  console.log(sortDispatch, 'CHECK');
   
   const setSort = (sort: SortEnum) => {
     dispatchSort({type: sort}, );
