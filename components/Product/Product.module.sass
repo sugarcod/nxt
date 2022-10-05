@@ -7,20 +7,22 @@
 .logo
   grid-column: start / logoend
   grid-row: 1 / span 2
-  img
-    border-radius: 5px
+
 
 .title, .tag
   grid-column: titlestart/middle
 
 .price, .priceTitle
   grid-column: pricectart/ priceend
+  white-space: nowrap
 
 .credit, .creditTitle
    grid-column: creditstart/ creditend 
+   white-space: nowrap
 
 .rating, .rateTitle
   grid-column: ratestart / end
+  white-space: nowrap
 
 .hr, .descr, .actions
   grid-column: start/end
@@ -31,21 +33,30 @@
 .advs
   grid-column: middle/end
 
+.logo
+  img
+    border-radius: 5px
+
 .title
   font-weight: 600
   font-size: 20px
   line-height: 27px
+  align-self: flex-end
 .tag
   font-weight: 500
   font-size: 12px
   line-height: 12px
   color: #3B434E
 
+.rating
+  align-self: flex-end
+
 .price, .credit
   font-weight: 400
   font-size: 20px
   line-height: 27px
   color: #3B434E
+  align-self: flex-end
 
 .priceTitle, .creditTitle, .rateTitle
   font-weight: 300
@@ -53,23 +64,128 @@
   line-height: 19px
   color: #3B434E
 
+.month
+  font-size: 14px
+  line-height: 19px
+
+.oldPrice
+  margin-left: 5px
+
+.cat
+  margin-top: 7px
+
 .descr
   font-weight: 400
   font-size: 16px
   line-height: 24px
   color: #3B434E
 
-.advs
-  position: relative
-  div:nth-child(1)
-    position: absolute
-    left: 0
-    height: 100%
-    width: 2px
-    background: #1DC47E
-  div:nth-child(2)
-    position: absolute
-    left: 0
-    height: 100%
-    width: 2px
-    background: #FC836D
+.reviewButton
+  margin-left: 20px
+
+.advTitle
+  margin-bottom: 5px
+  font-weight: 700
+  font-size: 16px
+  line-height: 22px
+
+.advantages
+  padding-left: 15px
+  border-left: 2px solid #1DC47E
+  margin-bottom: 20px
+
+
+.disadvantages
+  padding-left: 15px
+  border-left: 2px solid #FC836D
+
+.chars
+  grid-template-columns: auto 1fr auto
+  display: grid
+  align-items: end
+  font-size: 16px
+  padding-right: 60px
+  gap: 10px
+
+.char
+  font-size: 16px
+  line-height: 32px
+  font-weight: bold
+
+.charValue
+  font-size: 16px
+  line-height: 32px
+
+.charDot
+  margin-bottom: 9px
+  border-top: 1px dashed red
+
+
+
+
+.closed
+  overflow: hidden
+  max-height: 0
+  padding: 0
+
+.opened
+  max-height: auto
+  padding: 30px
+
+
+.review
+  margin-top: -30px
+
+ 
+@media screen and (max-width: 1320px)
+  .product
+    grid-template-columns: 70px 30px auto 40px auto 40px 1fr
+    grid-template-areas: "logo . title title title title title" "logo . tag tag tag tag tag" "price price price . credit . rating" "priceTitle priceTitle priceTitle . creditTitle . rateTitle " "hr hr hr hr hr hr hr" "descr descr descr descr descr descr descr" "feature feature feature feature feature feature feature" "advs advs advs advs advs advs advs" "hr2 hr2 hr2 hr2 hr2 hr2 hr2" "actions actions actions actions actions actions actions"
+  
+  .logo
+    grid-area: logo
+  .title
+    grid-area: title
+  .tag
+    grid-area: tag
+  .price
+    grid-area: price
+  .credit
+    grid-area: credit
+  .rating
+    grid-area: rating
+  .priceTitle
+    grid-area: priceTitle
+  .creditTitle
+    grid-area: creditTitle
+  .rateTitle
+    grid-area: rateTitle
+  .hr
+    grid-area: hr
+  .hr2
+    grid-area: hr2
+  .descr
+    grid-area: descr
+  .feature
+    grid-area: feature
+  .advs
+    grid-area: advs
+  .actions
+    grid-area: actions
+
+@media screen and (max-width: 640px)
+  .product
+    grid-template-columns: 70px 30px 1fr
+    grid-template-areas: "logo . title" "logo . tag" "priceTitle price price" "creditTitle creditTitle credit" "rateTitle rateTitle rating" "hr hr hr"  "descr descr descr" "feature feature feature" "advs advs advs" "hr2 hr2 hr2" "actions actions actions"
+
+  .price, .credit, .rating
+    text-align: center
+    margin-bottom: 10px
+
+  .tag
+    margin-bottom: 20px
+
+@media screen and (max-width: 480px)
+  .product
+    grid-template-columns: 1fr
+    grid-template-areas: "logo" "title" "tag" "price" "priceTitle" "credit" "creditTitle" "rating" "rateTitle" "hr"  "descr" "feature" "advs" "hr2" "actions"
