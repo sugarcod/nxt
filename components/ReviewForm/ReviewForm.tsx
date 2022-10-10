@@ -6,22 +6,39 @@ import { Rating } from "../Rating/Rating";
 import { Textarea } from "../Textarea/Textarea";
 import { Button } from "../Button/Button";
 import ClosedIcon from './close.svg'
+import { useForm, Controller } from "react-hook-form";
+import { IReviewForm } from "./ReviewForm.interface";
 
 
 
 export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) => {
+  const {register, control, handleSubmit} = useForm<IReviewForm>();
+  const onSubmit = (data: IReviewForm) => {
+   console.log(data, 'data');
+   
+  }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
     <div className={cn(styles.reviewForm, className)} {...props}>
 
-      <Input placeholder="Name" />
-      <Input placeholder="Review title" />
+      <Input {...register('name')} placeholder="Name" />
+      <Input {...register('title')} placeholder="Review title" />
       <div className={styles.rating}>
         <span>Grade: </span>
-        <Rating rating={0} />
+        <div className={styles.rate}>
+          <Controller 
+          control={control}
+          name="rating"
+          render={(field)=>(
+            <Rating isEditable  rating={field.value} setRating={field.onChange}/>
+          )
+          }
+        />
+       
+        </div>
       </div>
-      <Textarea className={styles.textarea} placeholder="Review text" />
+      <Textarea  className={styles.textarea} placeholder="Review text" />
       <div className={styles.submit}>
         <Button appearance="primary">Send</Button>
         <span>* Before publication, the review will be pre-moderated and checked</span>
@@ -37,7 +54,7 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) =>
       </div>
 
  
-    </>
+    </form>
     
   );
 };

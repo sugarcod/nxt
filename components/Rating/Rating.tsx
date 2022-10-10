@@ -1,89 +1,54 @@
 import { RatingProps } from "./Rating.props";
 import styles from "./Rating.module.sass";
 import Star from "./star.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cn from "classnames";
+import { v4 } from 'uuid';
 
-export const Rating = ({
-  rating,
-  setRating,
-  isEditable = false,
-  ...props
-}: RatingProps) => {
-  const [myRate, setMyRate] = useState(new Array(5).fill(<></>));
-  const [tempRate, setTempRate] = useState(0);
+export const Rating = ({isEditable, rating, setRating, className, ...props}:RatingProps ) => {
+  const [starIndex, setStarIndex] = useState<number>(rating)
+  const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>))
+  const [isHovering, setIsHovering] = useState(false);
+  console.log("🚀 ~ file: Rating.tsx ~ line 12 ~ Rating ~ isHovering", isHovering)
 
-  const rateArr = (rating: number): JSX.Element[] => {
-    let operate = true;
-    const rate = myRate.map((elem, index) => {
-      if (isEditable) {
-        return (
+  useEffect(()=>{
+    fillStars()
+  }, [starIndex, isHovering])
+
+
+  let editArray: JSX.Element[] = []
+
+  const fillStars = () => {
+    if(isEditable){
+      ratingArray.map((star, index) => {
+        editArray.push(
           <Star
-            key={index}
-            onMouseEnter={() => {
-              if (!operate) return;
-              if (operate) {
-                setTempRate(index + 1);
-              }
-              //rateArr(index + 1);
-            }}
-            onMouseLeave={() => {
-              if (!operate) return;
-              if (operate) {
-                setTempRate(0);
-              }
-            }}
-            onClick={() => {
-              operate = false;
-              setRating(tempRate + 1);
-            }}
-            className={cn(styles.star, {
-              [styles.paint]: !operate,
-              [styles.filled]: tempRate > index
-            })}
+          onMouseEnter={()=>{setIsHovering(true)}}
+          onMouseLeave={()=>{setIsHovering(false)}}
+          className={isHovering ? `${styles.filled}` : ''}
+          onClick={()=>{setStarIndex(index)}}
           />
-        );
-      } else {
-        if (rating > index) {
-          return <Star key={index} className={styles.filled} />;
+        )
+        })
+        setRatingArray(editArray)
+    }
+
+    if(starIndex > 0){
+      const arrayCreator = ratingArray.map((star, index) => {
+        if(starIndex > index){
+          return <Star className={styles.filled}/>
         } else {
-          return <Star key={index} />;
+          return <Star />
         }
-      }
-    });
-    return rate;
-  };
+      })
+      setRatingArray(arrayCreator)
 
-  return <div>{rateArr(rating)}</div>;
-};
-
-/*
-import { RatingProps } from "./Rating.props";
-import styles from './Rating.module.sass';
-import Star from './star.svg';
-import { useState } from "react";
-import cn from 'classnames';
-
-
-export const Rating = ({rating, setRating, isEditable = false, ...props}: RatingProps) => {
-
-  const [myRating, setMyRating] = useState(new Array(5).fill(<></>));
-
-  const  constructorRating = (rating: number):JSX.Element[] => {
-    const updatedArr = myRating.map((elem, index) => {
-      if(rating > index){
-        return <Star className={styles.filled}/>;
-      } else {
-        return <Star/>;
-      }
-      
-    });
-    return updatedArr;
-  };
-
-  return <div {...props}>
-    {constructorRating(4)}
-  </div>;
-};
-
-*/
+    }
+}
+  
+  
+  
+  return <div className="12">
+    {ratingArray.map(s => s)}
+  </div>
+}

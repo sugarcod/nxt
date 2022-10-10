@@ -10,6 +10,7 @@ import Image from 'next/image';
 import React, { useState } from "react";
 import { Review } from "../Review/Review";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
+import { v4 } from 'uuid';
 
 
 export const Product = ({product, className, ...props}: ProductProps) => {
@@ -18,7 +19,7 @@ export const Product = ({product, className, ...props}: ProductProps) => {
 
   return (
     <>
-    <Card className={cn(className, styles.product)}>
+    <Card key={v4()} className={cn(className, styles.product)}>
     
           <div className={styles.logo}>
             <Image  
@@ -38,7 +39,7 @@ export const Product = ({product, className, ...props}: ProductProps) => {
           
           <div className={styles.rating}><Rating rating={product.reviewAvg || product.initialRating}/></div>
           
-          <div  className={styles.tag}>{product.categories.map( cat =><Tag className={styles.cat} key={cat} size={"s"} color={"ghost"}>{cat}</Tag> )}</div>
+          <div  className={styles.tag}>{product.categories.map( cat =><Tag className={styles.cat} key={v4()} size={"s"} color={"ghost"}>{cat}</Tag> )}</div>
           <div className={styles.priceTitle}> <span>Price</span> </div>
           <div className={styles.creditTitle}> <span>Credit</span> </div>
           <div className={styles.rateTitle}> <span>{product.reviewCount}</span> <span>{devlOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'] )}</span></div>
@@ -46,7 +47,7 @@ export const Product = ({product, className, ...props}: ProductProps) => {
           <div className={styles.descr}>{product.description}</div>
           <div className={styles.feature}>
             {product.characteristics.map( c=> (
-              <div className={styles.chars} key={c.name}>
+              <div className={styles.chars} key={v4()}>
                 <span className={styles.char}>{c.name}</span>
                 <span className={styles.charDot}></span>
                 <span className={styles.charValue}>{c.value}</span>
@@ -77,21 +78,21 @@ export const Product = ({product, className, ...props}: ProductProps) => {
           </div>
     </Card>
 
-    <Card color="blue" className={cn(styles.review, {
+    <Card  key={v4()} color="blue" className={cn(styles.review, {
         [styles.opened]: isReviewOpened,
         [styles.closed]: !isReviewOpened
       })
     }>
 
       {product.reviews.map(r => (
-        <>
-         <Review key={r._id} review={r} />
+        <div key={v4()}>
+         <Review  review={r} />
           <hr />
-        </>
+        </div>
        
       ))}
 
-      <ReviewForm productId={product._id} />
+      <ReviewForm key={v4()} productId={product._id} />
 
     </Card>
 

@@ -7,6 +7,7 @@ import { TopLevelCategory } from "../../interfaces/page.interface";
 import { ProductModel } from "../../interfaces/product.interface";
 import { TopPageComponentProps } from "./TopPageComponent.props";
 import styles from './TopPageComponents.module.sass';
+import { v4 } from 'uuid';
 
 
 interface SortAction {
@@ -65,7 +66,7 @@ export const TopPageComponent = ({page, products, firstCategory}: TopPageCompone
        </div>
 
        <div>
-       {productSorted && productSorted.map((prod:ProductModel , index: number) => (<Product product={prod} className="mb-3" key={index}/>))}
+       {productSorted && productSorted.map((prod:ProductModel , index: number) => (<Product product={prod} className="mb-3" key={v4()}/>))}
        </div>
 
        <div className={styles.hhTitle}>

@@ -3,25 +3,41 @@ import styles from './Textarea.module.sass';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from "react";
 
+interface TextAreaChange {
+  pix: number;
+  change: boolean
+}
+
 
 export const Textarea = ({children,  className, ...props}: TextareaProps) => {
   const [value, setValue] = useState<string>('')
-  const [style, setStyle] = useState<string>('')
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [styl, setStyl] = useState<TextAreaChange>({pix: 80, change: false})
+  const refArea = useRef<HTMLTextAreaElement>(null);
+
+
+  
+
   useEffect(()=>{
-    setStyle('0px');
-
-  },)
-
+    
+    if(styl.change){
+      setStyl({pix: styl.pix+30, change: false})
+    }
+ 
+  },[value])
 
   return (
     <textarea 
     className={cn(className, styles.textarea)} 
     {...props} 
     value={value}
-    onChange={(e)=>{setValue(e.target.value)}}
-    ref={textAreaRef}
-    style={{height: style}}
+    onChange={(e)=>{
+      if(e.target.scrollHeight > e.target.offsetHeight){
+        setStyl({pix: styl.pix, change: true})
+      }
+      setValue(e.target.value)
+    }}
+    ref={refArea}
+    style={{height: `${styl.pix}px`}}
     />
   );
 };

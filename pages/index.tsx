@@ -34,9 +34,8 @@ function Home({menu}: HomeProps): JSX.Element {
           tagi1
         </Tag>
         <Rating rating={5} setRating={setRat} />
-        <Rating rating={4} setRating={setRat} />
-        <Rating rating={2} setRating={setRat} />
-        <Rating rating={1} setRating={setRat} isEditable={true} />
+        <Rating rating={3} setRating={setRat} />
+        <Rating rating={0} isEditable setRating={setRat} />
 
         <Input placeholder="Rating"/>
 
