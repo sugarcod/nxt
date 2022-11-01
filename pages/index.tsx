@@ -1,16 +1,14 @@
 import { GetStaticProps } from "next";
 import { useState } from "react";
-import { Button, Htag, Tag, PTag, Input, Textarea } from "../components";
-import { Rating } from "../components/Rating/Rating";
+import { Button, Htag, Tag, PTag, Input, RatingZ, Rating } from "../components";
 import { withLayout } from "../layout/Layout";
-import axios from 'axios';
+import axios from "axios";
 import { MenuItem } from "../interfaces/menu.interface";
 import { Product } from "../components/Product/Product";
 
-function Home({menu}: HomeProps): JSX.Element {
+function Home({ menu }: HomeProps): JSX.Element {
   const [rat, setRat] = useState(0);
-  console.log(process.env.NEXT_PUBLIC_DOMAIN, 'NEXT_PUBLIC_DOMAIN');
-  
+  console.log(process.env.NEXT_PUBLIC_DOMAIN, "NEXT_PUBLIC_DOMAIN");
 
   return (
     <>
@@ -36,12 +34,11 @@ function Home({menu}: HomeProps): JSX.Element {
         <Rating rating={5} setRating={setRat} />
         <Rating rating={3} setRating={setRat} />
         <Rating rating={0} isEditable setRating={setRat} />
+        <RatingZ rating={2} setRating={setRat} />
 
-        <Input placeholder="Rating"/>
+        <Input placeholder="Rating" />
 
-      
-
-       
+        <RatingZ rating={2} setRating={setRat} />
       </div>
     </>
   );
@@ -69,22 +66,23 @@ export default withLayout(Home);
         }
       `}</style> */
 
+export const getStaticProps: GetStaticProps = async () => {
+  const firstCategory = 0;
+  const { data: menu } = await axios.post<MenuItem[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + "/api/top-page/find",
+    {
+      firstCategory
+    }
+  );
+  return {
+    props: {
+      menu,
+      firstCategory
+    }
+  };
+};
 
-      export const getStaticProps: GetStaticProps = async() => {
-        const firstCategory = 0;
-        const {data: menu} = await axios.post<MenuItem[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find', {
-          firstCategory
-        });
-        return {
-          props: {
-            menu,
-            firstCategory
-          }
-        }
-      }
-
-
-      interface HomeProps extends Record<string, unknown> {
-        menu: MenuItem[];
-        firstCategory: number;
-      }
+interface HomeProps extends Record<string, unknown> {
+  menu: MenuItem[];
+  firstCategory: number;
+}
