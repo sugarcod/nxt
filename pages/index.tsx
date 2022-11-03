@@ -8,6 +8,8 @@ import { Product } from "../components/Product/Product";
 
 function Home({ menu }: HomeProps): JSX.Element {
   const [rat, setRat] = useState(0);
+  console.log(rat, "rat");
+
   console.log(process.env.NEXT_PUBLIC_DOMAIN, "NEXT_PUBLIC_DOMAIN");
 
   return (
@@ -38,7 +40,7 @@ function Home({ menu }: HomeProps): JSX.Element {
 
         <Input placeholder="Rating" />
 
-        <RatingZ rating={2} setRating={setRat} />
+        <RatingZ rating={rat} isEditable setRating={setRat} />
       </div>
     </>
   );
