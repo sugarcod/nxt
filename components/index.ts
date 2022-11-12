@@ -8,7 +8,7 @@ export * from "./Advantages/Advantages";
 export * from "./Skills/Skills";
 export * from "./Input/Input";
 export * from "./Rating/Rating";
-export * from "./RatingZ/RatingZ";
+export * from "./RatingS/RatingS";
 export * from "./Sort/Sort";
 export * from "./Textarea/Textarea";
 export * from "./Search/Search";

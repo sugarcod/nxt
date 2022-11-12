@@ -1,7 +1,7 @@
 import { ProductProps } from "./Product.props";
 import styles from './Product.module.sass';
 import cn from 'classnames';
-import { Rating } from "../Rating/Rating";
+import { RatingS } from "../RatingS/RatingS";
 import { Tag } from "../Tag/Tag";
 import { Card } from "../Card/Card";
 import { Button } from "../Button/Button";
@@ -37,7 +37,7 @@ export const Product = ({product, className, ...props}: ProductProps) => {
          
           <div className={styles.credit}><span>{priceRu(product.credit)}/<span className={styles.month}>мес</span></span> </div>
           
-          <div className={styles.rating}><Rating rating={product.reviewAvg || product.initialRating}/></div>
+          <div className={styles.rating}><RatingS rating={product.reviewAvg || product.initialRating}/></div>
           
           <div  className={styles.tag}>{product.categories.map( cat =><Tag className={styles.cat} key={v4()} size={"s"} color={"ghost"}>{cat}</Tag> )}</div>
           <div className={styles.priceTitle}> <span>Price</span> </div>

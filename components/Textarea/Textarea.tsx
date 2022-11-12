@@ -1,7 +1,7 @@
 import { TextareaProps } from "./Textarea.props";
 import styles from './Textarea.module.sass';
 import cn from 'classnames';
-import { useEffect, useRef, useState } from "react";
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
 
 interface TextAreaChange {
   pix: number;
@@ -9,10 +9,10 @@ interface TextAreaChange {
 }
 
 
-export const Textarea = ({children,  className, ...props}: TextareaProps) => {
+export const Textarea = forwardRef(({children,  className, ...props}: TextareaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
   const [value, setValue] = useState<string>('')
   const [styl, setStyl] = useState<TextAreaChange>({pix: 80, change: false})
-  const refArea = useRef<HTMLTextAreaElement>(null);
+  //const refArea = useRef<HTMLTextAreaElement>(null);
 
 
   
@@ -36,8 +36,8 @@ export const Textarea = ({children,  className, ...props}: TextareaProps) => {
       }
       setValue(e.target.value)
     }}
-    ref={refArea}
+    ref={ref}
     style={{height: `${styl.pix}px`}}
     />
   );
-};
+});

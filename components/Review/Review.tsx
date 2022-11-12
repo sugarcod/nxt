@@ -4,7 +4,7 @@ import cn from 'classnames';
 import UserIcon from './user.svg';
 import {format} from 'date-fns';
 import {ru} from 'date-fns/locale';
-import { Rating } from "../Rating/Rating";
+import { RatingS } from "../RatingS/RatingS";
 
 
 
@@ -24,7 +24,7 @@ export const Review = ({review,  className, ...props}: ReviewProps) => {
       </div>
 
       <div className={styles.rating}>
-        <Rating rating={rating}  />
+        <RatingS rating={rating}  />
       </div>
 
       <div className={styles.description}>
