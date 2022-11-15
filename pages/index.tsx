@@ -5,6 +5,7 @@ import { withLayout } from "../layout/Layout";
 import axios from "axios";
 import { MenuItem } from "../interfaces/menu.interface";
 import { Product } from "../components/Product/Product";
+import { API } from "../helpers/api";
 
 function Home({ menu }: HomeProps): JSX.Element {
   const [rat, setRat] = useState(0);
@@ -71,7 +72,7 @@ export default withLayout(Home);
 export const getStaticProps: GetStaticProps = async () => {
   const firstCategory = 0;
   const { data: menu } = await axios.post<MenuItem[]>(
-    process.env.NEXT_PUBLIC_DOMAIN + "/api/top-page/find",
+    API.topPage.find,
     {
       firstCategory
     }

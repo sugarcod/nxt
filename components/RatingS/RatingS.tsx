@@ -9,10 +9,14 @@ import { v4 } from "uuid";
 export const RatingS = ({
   isEditable = false,
   rating,
+  error,
   setRating,
   className,
   ...props
 }: RatingZProps): JSX.Element => {
+
+  console.log(error,'rules');
+  
   const changeDisplay = (i: number) => {
     if (!isEditable) {
       return;
@@ -71,10 +75,16 @@ export const RatingS = ({
   };
 
   return (
-    <div {...props}>
+    <div className={cn({
+      [styles.error]: error
+    })}>
+    <div {...props} >
       {ratingArray.map((r, i) => (
         <span key={v4()}> {r}</span>
       ))}
     </div>
+    {error && <span className={styles.errorMess}>{error.message}</span>}
+    </div>
+    
   );
 };

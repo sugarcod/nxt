@@ -8,34 +8,59 @@ import { Textarea } from "../Textarea/Textarea";
 import { Button } from "../Button/Button";
 import ClosedIcon from './close.svg'
 import { useForm, Controller } from "react-hook-form";
-import { IReviewForm } from "./ReviewForm.interface";
+import { IReviewForm, IReviewResponse } from "./ReviewForm.interface";
+import { API } from "../../helpers/api";
+import axios from "axios";
+import { useState } from "react";
 
 
 
 export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) => {
-  const {register, control, handleSubmit} = useForm<IReviewForm>();
-  const onSubmitFunc = (data: IReviewForm) => {
-   console.log(data, 'data');
+  const {register, control, handleSubmit, formState: {errors}} = useForm<IReviewForm>();
+  const{isSuccess, setIsSuccess} = useState<boolean>(false)
+
+  const onSubmitFunc = async (formData: IReviewForm) => {
+    try {
+      const {data} = await axios.post<IReviewResponse>(API.review.createDemo, {...formData, productId})
+      if(data.message){
+        setIsSuccess(true)
+      } else {
+        setIsSuccess(false)
+      }
+    } catch (error) {
+      
+    }
    
+   
+  
+  
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmitFunc)}>
     <div className={cn(styles.reviewForm, className)} {...props}>
 
-      <Input {...register('name')} placeholder="Name" />
-      <Input {...register('title')} placeholder="Review title" />
+      <Input 
+          {...register('name', {required: {value: true, message: 'Please enter name'}})}
+          placeholder="Name"
+          error={errors.name}
+          />
+      <Input 
+          {...register('title', {required: {value: true, message: 'Please enter title'}})}
+          placeholder="Review title"
+          error={errors.title}
+          />
       <div className={styles.rating}>
         <span>Grade: </span>
         <div className={styles.rate}>
           <Controller 
           control={control}
           name="rating"
+          rules={{ required: {value: true, message: 'Please rate'} }}
           render={({field})=>{
             console.log(field, 'field')
             return<>
-            <Rating isEditable  rating={field.value} ref={field.ref} setRating={field.onChange}/>
-            <RatingS isEditable  rating={field.value} ref={field.ref} setRating={field.onChange}/>
+            <RatingS isEditable error={errors.rating}  rating={field.value} ref={field.ref} setRating={field.onChange}/>
             </> 
           }
           }
@@ -43,7 +68,12 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) =>
        
         </div>
       </div>
-      <Textarea {...register('description')}  className={styles.textarea} placeholder="Review text" />
+      <Textarea 
+      {...register('description', {required: {value: true, message: 'Description must be provided'}})}
+      className={styles.textarea}
+      placeholder="Review text"
+      error={errors.description}
+      />
       <div className={styles.submit}>
         <Button type="submit" appearance="primary">Send</Button>
         <span>* Before publication, the review will be pre-moderated and checked</span>

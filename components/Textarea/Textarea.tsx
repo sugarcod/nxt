@@ -9,7 +9,7 @@ interface TextAreaChange {
 }
 
 
-export const Textarea = forwardRef(({children,  className, ...props}: TextareaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
+export const Textarea = forwardRef(({children, error, className, ...props}: TextareaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
   const [value, setValue] = useState<string>('')
   const [styl, setStyl] = useState<TextAreaChange>({pix: 80, change: false})
   //const refArea = useRef<HTMLTextAreaElement>(null);
@@ -26,18 +26,24 @@ export const Textarea = forwardRef(({children,  className, ...props}: TextareaPr
   },[value])
 
   return (
-    <textarea 
-    className={cn(className, styles.textarea)} 
-    {...props} 
-    value={value}
-    onChange={(e)=>{
-      if(e.target.scrollHeight > e.target.offsetHeight){
-        setStyl({pix: styl.pix, change: true})
-      }
-      setValue(e.target.value)
-    }}
-    ref={ref}
-    style={{height: `${styl.pix}px`}}
-    />
+    <div className={cn(className,styles.textAreaWrap)}>
+        <textarea 
+            className={cn(styles.textarea, {
+              [styles.error]: error
+            })} 
+            {...props} 
+            value={value}
+            onChange={(e)=>{
+              if(e.target.scrollHeight > e.target.offsetHeight){
+                setStyl({pix: styl.pix, change: true})
+              }
+              setValue(e.target.value)
+            }}
+            ref={ref}
+            style={{height: `${styl.pix}px`}}
+            />
+            {error && <span className={styles.errorMessage}>{error.message}</span>}
+    </div>
+    
   );
 });
