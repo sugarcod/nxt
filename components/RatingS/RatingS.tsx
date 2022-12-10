@@ -2,18 +2,18 @@ import { RatingZProps } from "./RatingS.props.ts";
 import styles from "./RatingS.module.sass";
 import cn from "classnames";
 import JSXStyle from "styled-jsx/style";
-import { useEffect, useState, KeyboardEvent } from "react";
+import { useEffect, useState, KeyboardEvent, forwardRef, ForwardedRef } from "react";
 import StarIcon from "./star.svg";
 import { v4 } from "uuid";
 
-export const RatingS = ({
+export const RatingS = forwardRef(({
   isEditable = false,
   rating,
   error,
   setRating,
   className,
   ...props
-}: RatingZProps): JSX.Element => {
+}: RatingZProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
 
   console.log(error,'rules');
   
@@ -75,10 +75,10 @@ export const RatingS = ({
   };
 
   return (
-    <div className={cn({
+    <div  className={cn({
       [styles.error]: error
     })}>
-    <div {...props} >
+    <div ref={ref} {...props} >
       {ratingArray.map((r, i) => (
         <span key={v4()}> {r}</span>
       ))}
@@ -87,4 +87,4 @@ export const RatingS = ({
     </div>
     
   );
-};
+});

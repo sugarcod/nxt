@@ -16,24 +16,24 @@ import { useState } from "react";
 
 
 export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) => {
-  const {register, control, handleSubmit, formState: {errors}} = useForm<IReviewForm>();
-  const{isSuccess, setIsSuccess} = useState<boolean>(false)
+  const {register, control, handleSubmit, formState: {errors}, reset} = useForm<IReviewForm>();
+  const[isSuccess, setIsSuccess] = useState<boolean>(false)
+  const[isError, setIsError] = useState<string>()
 
   const onSubmitFunc = async (formData: IReviewForm) => {
     try {
       const {data} = await axios.post<IReviewResponse>(API.review.createDemo, {...formData, productId})
       if(data.message){
-        setIsSuccess(true)
+        setIsSuccess(true);
+        reset();
+
       } else {
-        setIsSuccess(false)
+        setIsError('SOmething went wrong');
       }
     } catch (error) {
-      
+      setIsError(error.message);
     }
-   
-   
-  
-  
+
   }
 
   return (
@@ -56,7 +56,7 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) =>
           <Controller 
           control={control}
           name="rating"
-          rules={{ required: {value: true, message: 'Please rate'} }}
+          rules={{ required: {value: true, message: 'Please rate me'} }}
           render={({field})=>{
             console.log(field, 'field')
             return<>
@@ -80,13 +80,21 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps) =>
       </div>
       </div>
 
-      <div className={styles.success}>
+      {isSuccess && <div className={cn(styles.panel, styles.success)}>
         <div className={styles.successTitle}> Your review send</div>
         <div >
           Your review will be publishing after checking
         </div>
-        <ClosedIcon className={styles.close} />
-      </div>
+        <ClosedIcon onClick={()=> setIsSuccess(false)} className={styles.close} />
+      </div>}
+
+      {isError && <div className={cn(styles.panel, styles.error)}>
+        <div className={styles.errorTitle}> Your review not send</div>
+        <div >
+          {isError}
+        </div>
+        <ClosedIcon onClick={()=> setIsError('')} className={styles.errorClose} />
+      </div>}
 
  
     </form>

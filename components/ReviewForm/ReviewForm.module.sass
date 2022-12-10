@@ -31,14 +31,22 @@
   gap: 20px
   align-items: center
 
-.success
-  background: var(--green-light)
-  padding: 20px
+.panel
+  padding: 20px 
   position: relative
   border-radius: 10px
   margin-top: 20px
 
-.succesTitle
+.success
+  background: var(--green-light)
+  
+
+.error
+  background: var(--red-light)
+  color: var(--white)
+
+
+.succesTitle, .errorTitle
   font-weight: bold
 
 .close
@@ -47,6 +55,15 @@
   right: 10px
   top: 10px
   cursor: pointer
+
+.errorClose
+  position: absolute
+  content: ''
+  right: 10px
+  top: 10px
+  cursor: pointer
+  path
+    stroke: var(--white)
 
 .rate
   cursor: pointer
